@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{ltablex}
+\usepackage{longtable}
+
+\title{STATA Cheat Sheet}
+\author{Chris Hoofnagle}
+\date{August 2014}
+
+\begin{document}
+
+\maketitle
+
+\section{General}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{ X X }
+\hline
+Stata Syntax &  command variables, options  \\ \hline
+Operators & \&=and {\textbar}=or others: == != \textasciitilde{}= {\textgreater} {\textgreater}= {\textless} {\textless}= \\ \hline
+Syntax for if excluding missing values &	summarize variable if sex==1 \& age {\textgreater} 30 \& age {\textless} \\ \hline
+xtile, nquantiles() &   Generates new variable into equal number of cases \\\hline 
+Clonevar & Copies a variable, its label, etc \\\hline 
+drop & Deletes a variable \\\hline
+\end{tabularx}
+\end{table}
+
+\section{Descriptive statistics}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{ X X }
+\hline
+sum vars & Summarize Westin\_Code, detail \\\hline 
+list vars & List Westin\_Code testscore in 1/20 \\\hline 
+codebook vars &  \\\hline 
+Tabstat vars & Tabstat var, statistics(mean median sd) by(var) columns(statistics) \\\hline tab1 vars & Basic one way tab \\\hline 
+table vars & Table recage, contents(mean educ count recage) \\\hline 
+ \end{tabularx}
+\end{table}
+
+\newpage
+\section{Helpful commands}
+\begin{table}[h]
+\centering
+\begin{tabularx}{\linewidth}{ X X }
+\hline
+ssc hot, n(25) & Top 25 most downloaded extensions \\\hline 
+fre & Enhancement for tab, ssc install fre \\\hline 
+numlabel \_all, add & Appends labels to all values \\\hline 
+bigtab & Ssc install for “too many values” error in tabulate \\\hline 
+ \end{tabularx}
+\end{table}
+
+\section{Comparing variables---nominal, ordinal, and interval}
+\centering
+\begin{tabularx}{\linewidth}{ X X }
+\hline
+tab dep\_var indep\_var & Cross tab for two categorical (nominal or ordinal) values, puts dep\_var in rows \\\hline 
+tab indep\_var,sum(dep\_var) & Mean comparison for categorical indep\_var and interval dep\_var \\\hline 
+bysort control\_var: tabulate dep\_var indep\_var & Creates many cross tabs, one for each of the control variables \\\hline 
+tabulate, generate() & Creates indicator variables form existing; great for dummy variables in mean comparisons  \\\hline 
+tab control\_var indep\_var, summarize(dep\_var) & Mean comparison for each of the control variables \\\hline 
+tab sex privacy\_fund chi2 & Tab option for chi2 \\\hline 
+tab age educ taub & Proportional reduction in error measure of the strength of a relationship, both variables ordinal, table must be “square.”  PREs answer the “how strong” question \\\hline 
+somersd indep\_var dep\_var & Taub alternative PRE for non-square tables \\\hline 
+lambda ideo race & PRE for variables where one or both is nominal.  Mode must be different between categories \\\hline 
+tab gender Westin chi2 V & Alternative to lambda, not a PRE \\\hline 
+chi2 gamma taub V expected & Options for comparisons \\\hline 
+tabi & Lets you input values and check chi2, gamma, V \\\hline 
+How to report chi2 & ${\upchi}$2(1, N=1,000) = 3.034; p {\textless} .001 \\\hline 
+ &  \\\hline 
+ttest var=test\_value & ttest age=0 One sample t test; finds boundaries of mean at 95\% confidence level \\\hline 
+robvar var, by (group)  & Compares variances (use before 2-sample ttest) Must confirm that p{\textless}.05, otherwise add unequal option to ttest \\\hline 
+ttest var, by(group) level(90) & Determines whether differences in means are statistically significant at 90\% level, e.g. ttest quiz if WestinCode{\textless}3, by(WestinCode) level(90) \\\hline 
+corr vars & For interval-level relationships \\\hline 
+xi: regress dep i.indep & Estimates effect of categorical variables on independent \\\hline Regress dep indep\_vars & Dependent is interval; indep is any type.  Estimates effect of indep var on dependent.  R explains independent’s contribution to dep value \\\hline 
+Logit & Analyze interval independent variable and binary dependent \\\hline 
+
+\end{tabularx}
+
+
+\end{document}
